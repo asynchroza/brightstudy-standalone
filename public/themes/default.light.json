@@ -1,0 +1,11 @@
+{
+    "themeName": "default.light",
+    "global": {
+        "backgroundColor": "blue"
+    },
+    "components": {
+        "GalleryComponent": {
+            "backgroundColor": "white"
+        }
+    }
+} 
