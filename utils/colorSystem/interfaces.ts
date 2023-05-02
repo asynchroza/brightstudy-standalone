@@ -11,3 +11,8 @@ export interface ColorTheme extends Object {
   global: StyleProps;
   components: Components;
 }
+
+export interface ThemePreferences {
+    themeName: string;
+    themeMode: "light" | "dark";
+}

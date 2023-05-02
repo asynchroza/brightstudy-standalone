@@ -1,20 +1,33 @@
 import { isUndefined } from "lodash";
+
 import { isServerSide } from "../helpers";
-import { ColorTheme, StyleProps } from "./interfaces";
+import { ColorTheme, StyleProps, ThemePreferences } from "./interfaces";
+
+// TODO: define descriptions for all functions which might be used externally
 
 const validateCache = () => {
   // TODO: check if realm based themes are saved in public dir, if not -> fetch them
   // ? Should be run on log in
 };
 
+/**
+ * Load theme preferences for the realm and the user
+ * @summary realm preferences define the selected theme (theme name) and user preferences define the theme mode (e.g. light or dark).
+ * @param {string} user - TO BE DEFINED -> a way to define queried user. Pass realm as param as well?
+ * @return {ThemePreferences} theme preferences
+ */
+const loadThemePreferences = (user: string): ThemePreferences => {
+  // TODO: load realm and user preferences
+
+  // ! mocked
+  return { themeName: "default", themeMode: "light" };
+};
+
 const loadTheme = (): ColorTheme => {
   // TODO: fetch theme from db using a useHook approach
   // ? how to cache user preferences. Will cache be persisted for a whole session?
 
-  // ! mocked result
-  const themeName = "default"; // realm preference
-  const themeMode = "light"; // user preference
-
+  const { themeName, themeMode } = loadThemePreferences("someone");
   // try to load preffered theme
   // if ^ fails, try to load default theme
   try {
@@ -29,15 +42,14 @@ const loadTheme = (): ColorTheme => {
   }
 };
 
+/**
+ * This function retrieves theme-dependent styles for a specified React component.
+ * @param {string} componentName - The name of the React component for which to fetch styling.
+ * @return {Object} A JavaScript object containing CSS styling.
+ */
 export const getStyledComponentObject = (
   componentName: string
 ): StyleProps | undefined => {
-  /**
-   * This function retrieves theme-dependent styles for a specified React component.
-   * @param {string} componentName - The name of the React component for which to fetch styling.
-   * @return {Object} A JavaScript object containing CSS styling.
-   */
-
   // do not run on client
   if (!isServerSide()) return;
 
