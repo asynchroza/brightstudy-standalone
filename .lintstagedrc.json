@@ -1,9 +1,9 @@
 {
   "*.ts": [
-    "prettier --write",
+    "prettier --write"
   ],
   "*.js": [
-    "prettier --write",
+    "prettier --write"
   ],
   "*.html": [
     "prettier --write"
