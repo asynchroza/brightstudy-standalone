@@ -2,6 +2,7 @@ import { isUndefined } from "lodash";
 
 import { isServerSide } from "../helpers";
 import { ColorTheme, StyleProps, ThemePreferences } from "./interfaces";
+import { getThemeCookies } from "./cookieFetcher";
 
 // TODO: define descriptions for all functions which might be used externally
 
@@ -16,29 +17,22 @@ const validateCache = () => {
  * @param {string} user - TO BE DEFINED -> a way to define queried user. Pass realm as param as well?
  * @return {ThemePreferences} theme preferences
  */
-const loadThemePreferences = (user: string): ThemePreferences => {
-  // TODO: load realm and user preferences
 
-  // ! mocked
-  return { themeName: "default", themeMode: "light" };
-};
-
-const loadTheme = (): ColorTheme => {
-  // TODO: fetch theme from db using a useHook approach
-  // ? how to cache user preferences. Will cache be persisted for a whole session?
-
-  const { themeName, themeMode } = loadThemePreferences("someone");
+const loadTheme = (
+  themeName: string | undefined,
+  themeMode: string | undefined
+): ColorTheme => {
   // try to load preffered theme
   // if ^ fails, try to load default theme
   try {
-    return require(`../../public/${themeName}.${themeMode}.json`) as ColorTheme;
+    return require(`../../public/themes/${themeName}.${themeMode}.json`) as ColorTheme;
   } catch (error) {
     console.error(error);
 
     // default to light mode if user preferences weren't fetched
-    return require(`../../public/default.${
+    return require(`../../public/themes/default.${
       isUndefined(themeMode) ? "light" : themeMode
-    }`) as ColorTheme;
+    }.json`) as ColorTheme;
   }
 };
 
@@ -53,7 +47,9 @@ export const getStyledComponentObject = (
   // do not run on client
   if (!isServerSide()) return;
 
-  const theme = loadTheme();
+  const { themeName, themeMode } = getThemeCookies();
+
+  const theme = loadTheme(themeName, themeMode);
 
   return theme.components[componentName];
 };

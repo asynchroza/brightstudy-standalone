@@ -13,6 +13,6 @@ export interface ColorTheme extends Object {
 }
 
 export interface ThemePreferences {
-    themeName: string;
-    themeMode: "light" | "dark";
+  themeName: string;
+  themeMode: "light" | "dark";
 }

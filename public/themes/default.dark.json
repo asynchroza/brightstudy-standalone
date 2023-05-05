@@ -5,7 +5,7 @@
     },
     "components": {
         "GalleryComponent": {
-            "backgroundColor": "white"
+            "backgroundColor": "red"
         }
     }
 }
