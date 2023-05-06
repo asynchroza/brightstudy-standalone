@@ -12,3 +12,13 @@ export const getThemeCookies = (): ThemePreferences => {
 
     return { themeName, themeMode }
 }
+
+export const getUser = (): string | undefined => {
+    const cookieStore = cookies()
+    const user = cookieStore.get('userId')
+    return user?.value
+}
+
+export const setThemeCookies = (themeName: string, themeMode: THEME_MODE) => {
+    // setCookie
+}

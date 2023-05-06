@@ -1,35 +1,31 @@
 import { isUndefined } from 'lodash'
 
 import { isServerSide } from '../helpers'
-import { ColorTheme, StyleProps, ThemePreferences } from './interfaces'
-import { getThemeCookies } from './cookieFetcher'
+import { ColorTheme, StyleProps } from './interfaces'
+import { getThemeCookies } from './cookieManager'
+import { fetchUserTheme } from './databaseManager'
 
 /**
- * Load theme preferences for the realm and the user
- * @summary realm preferences define the selected theme (theme name) and user preferences define the theme mode (e.g. light or dark).
- * @param {string} user - TO BE DEFINED -> a way to define queried user. Pass realm as param as well?
- * @return {ThemePreferences} theme preferences
+ * Load color theme
+ * @return {ColorTheme} returns the loaded theme if successful
  */
-
 const loadTheme = (): ColorTheme | undefined => {
     if (!isServerSide()) return undefined
 
     const { themeName, themeMode } = getThemeCookies()
 
-    if (isUndefined(themeName) || isUndefined(themeMode))
-        // try to load preffered theme
-        // if ^ fails, try to load default theme
+    if (isUndefined(themeName)) {
+        fetchUserTheme()
+    }
 
-        try {
-            return require(`../../public/themes/${themeName}.${themeMode}.json`) as ColorTheme
-        } catch (error) {
-            console.error(error)
+    try {
+        return require(`../../public/themes/${themeName}.${themeMode}.json`) as ColorTheme
+    } catch (error) {
+        console.warn('Failed loading user preferred theme.')
 
-            // default to light mode if user preferences weren't fetched
-            return require(`../../public/themes/default.${
-                isUndefined(themeMode) ? 'light' : themeMode
-            }.json`) as ColorTheme
-        }
+        // default to light mode if user preferences weren't fetched
+        return require(`../../public/themes/default.${isUndefined(themeMode) ? 'light' : themeMode}.json`) as ColorTheme
+    }
 }
 
 /**
