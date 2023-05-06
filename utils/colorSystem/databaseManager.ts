@@ -1,10 +1,12 @@
 import { getUser, setThemeCookies } from './cookieManager'
+import { ThemePreferences } from './interfaces'
 
-export const fetchUserTheme = () => {
+export const fetchUserTheme = (): ThemePreferences => {
     const user = getUser()
-
     // TODO: fetch user theme from db
-    const resp = { themeName: 'test', themeMode: 'dark' }
+    const resp = { themeName: 'test', themeMode: 'dark' } as ThemePreferences
 
-    setThemeCookies(resp.themeName, resp.themeMode as THEME_MODE)
+    setThemeCookies(resp)
+
+    return resp
 }

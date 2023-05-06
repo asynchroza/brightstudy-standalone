@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash'
+import { isNil, isUndefined } from 'lodash'
 
 import { isServerSide } from '../helpers'
 import { ColorTheme, StyleProps } from './interfaces'
@@ -14,8 +14,9 @@ const loadTheme = (): ColorTheme | undefined => {
 
     const { themeName, themeMode } = getThemeCookies()
 
-    if (isUndefined(themeName)) {
-        fetchUserTheme()
+    if (isNil(themeName)) {
+        const themePreferences = fetchUserTheme()
+        console.log(themePreferences)
     }
 
     try {
@@ -35,5 +36,6 @@ const loadTheme = (): ColorTheme | undefined => {
  */
 export const getStyledComponentObject = (componentName: string): StyleProps | undefined => {
     const theme = loadTheme()
+    console.log(theme)
     return theme?.components[componentName]
 }

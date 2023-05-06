@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { ThemePreferences } from './interfaces'
+import Cookies from 'js-cookie'
 
 /**
  * This function retrieves cookies that define the user's preferred theme settings
@@ -19,6 +20,7 @@ export const getUser = (): string | undefined => {
     return user?.value
 }
 
-export const setThemeCookies = (themeName: string, themeMode: THEME_MODE) => {
-    // setCookie
+export const setThemeCookies = (themePreferences: ThemePreferences) => {
+    Cookies.set('themeName', themePreferences.themeName || '')
+    Cookies.set('themeMode', themePreferences.themeMode || '')
 }
