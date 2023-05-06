@@ -11,17 +11,25 @@ import { getThemeCookies } from './cookieFetcher'
  * @return {ThemePreferences} theme preferences
  */
 
-const loadTheme = (themeName: string | undefined, themeMode: string | undefined): ColorTheme => {
-    // try to load preffered theme
-    // if ^ fails, try to load default theme
-    try {
-        return require(`../../public/themes/${themeName}.${themeMode}.json`) as ColorTheme
-    } catch (error) {
-        console.error(error)
+const loadTheme = (): ColorTheme | undefined => {
+    if (!isServerSide()) return undefined
 
-        // default to light mode if user preferences weren't fetched
-        return require(`../../public/themes/default.${isUndefined(themeMode) ? 'light' : themeMode}.json`) as ColorTheme
-    }
+    const { themeName, themeMode } = getThemeCookies()
+
+    if (isUndefined(themeName) || isUndefined(themeMode))
+        // try to load preffered theme
+        // if ^ fails, try to load default theme
+
+        try {
+            return require(`../../public/themes/${themeName}.${themeMode}.json`) as ColorTheme
+        } catch (error) {
+            console.error(error)
+
+            // default to light mode if user preferences weren't fetched
+            return require(`../../public/themes/default.${
+                isUndefined(themeMode) ? 'light' : themeMode
+            }.json`) as ColorTheme
+        }
 }
 
 /**
@@ -30,12 +38,6 @@ const loadTheme = (themeName: string | undefined, themeMode: string | undefined)
  * @return {Object} A JavaScript object containing CSS styling.
  */
 export const getStyledComponentObject = (componentName: string): StyleProps | undefined => {
-    // do not run on client
-    if (!isServerSide()) return
-
-    const { themeName, themeMode } = getThemeCookies()
-
-    const theme = loadTheme(themeName, themeMode)
-
-    return theme.components[componentName]
+    const theme = loadTheme()
+    return theme?.components[componentName]
 }
