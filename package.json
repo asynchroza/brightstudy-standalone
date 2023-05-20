@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "tsc",
-    "eslint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "eslint": "eslint src --ext ts,tsx,json,js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest --passWithNoTests",
     "server": "cd ./api && yarn server",
