@@ -7,7 +7,7 @@ This is the containerized standalone which is being hosted for universities unde
 ### Prerequisites:
 
 - You need [turbo repo](https://turbo.build/repo/docs/installing) installed
-- `turbo install` to install all dependencies
+- `turbo install:all` to install all project dependencies (equivalent to `yarn install` in root directory and `yarn install` in `/api` directory)
 
 ### Commands:
 

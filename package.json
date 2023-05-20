@@ -14,7 +14,8 @@
     "db": "cd ./api && yarn db",
     "db:migrate": "cd ./api && yarn db:migrate",
     "db:seed": "cd ./api && yarn db:seed",
-    "db:studio": "cd ./api && yarn db:studio"
+    "db:studio": "cd ./api && yarn db:studio",
+    "install:all": "yarn install && cd ./api && yarn install"
   },
   "dependencies": {
     "react": "^18.2.0",
