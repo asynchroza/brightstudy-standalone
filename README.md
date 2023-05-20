@@ -22,5 +22,6 @@ Server:
 Database:
 
 - **Start the database container** - `turbo db` (`yarn db` within the `/api` directory)
-- **How to migrate the database** - `yarn db:migrate` (within the `/api` directory)
-- **How to seed the database** - `yarn db:seed` (within the `/api` directory)
+- **Migrate the database schema** - `turbo db:migrate` (`yarn db:migrate` within the `/api` directory)
+- **Seed the database** - `turbo db:seed` (`yarn db:seed` within the `/api` directory)
+- **Explore data in Prisma studio** - `turbo db:studio` (`yarn db:studio` within the `/api` directory)

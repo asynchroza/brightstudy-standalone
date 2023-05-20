@@ -11,7 +11,10 @@
     "preview": "vite preview",
     "test": "jest --passWithNoTests",
     "server": "cd ./api && yarn server",
-    "db": "cd ./api && yarn db"
+    "db": "cd ./api && yarn db",
+    "db:migrate": "cd ./api && yarn db:migrate",
+    "db:seed": "cd ./api && yarn db:seed",
+    "db:studio": "cd ./api && yarn db:studio"
   },
   "dependencies": {
     "react": "^18.2.0",
