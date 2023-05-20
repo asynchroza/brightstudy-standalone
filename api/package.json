@@ -22,8 +22,10 @@
 	"dependencies": {
 		"@apollo/server": "^4.7.1",
 		"@prisma/client": "4.14.1",
+		"@types/lodash": "^4.14.194",
 		"graphql": "^16.6.0",
 		"graphql-scalars": "^1.22.0",
+		"lodash": "^4.17.21",
 		"prisma": "^4.14.1"
 	}
 }
