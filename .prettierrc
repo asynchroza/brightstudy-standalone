@@ -1,18 +1,17 @@
 {
-    "printWidth": 80,
+    "printWidth": 100,
     "tabWidth": 2,
-    "useTabs": false,
+    "useTabs": true,
     "semi": true,
     "singleQuote": true,
     "jsxSingleQuote": false,
-    "trailingComma": "es5",
+    "trailingComma": "none",
     "bracketSpacing": true,
     "jsxBracketSameLine": false,
     "arrowParens": "always",
     "proseWrap": "always",
     "htmlWhitespaceSensitivity": "css",
     "endOfLine": "lf",
-    "endOfFileLinebreak": "true",
     "overrides": [
         {
             "files": "*.md",
