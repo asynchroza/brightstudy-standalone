@@ -9,4 +9,5 @@ Prerequisites:
 - You need [turbo repo](https://turbo.build/repo/docs/installing) installed
 - `turbo install` to install all dependencies
 
-How to start the react app - `turbo dev`
+* **How to start the react app** - `turbo dev` (`yarn dev`)
+* **How to start server** - `turbo server` (which will actually run `yarn server` within the `/api` directory)
