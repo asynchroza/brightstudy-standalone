@@ -9,4 +9,4 @@ Prerequisites:
 - You need [turbo repo](https://turbo.build/repo/docs/installing) installed
 - `turbo install` to install all dependencies
 
-How to start the project - `turbo dev`
+How to start the react app - `turbo dev`
