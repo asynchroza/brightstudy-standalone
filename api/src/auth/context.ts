@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
-import { getUserByToken } from '../queries';
 import { isNil } from 'lodash';
+import { getUserByToken } from '../resolvers/user.resolvers';
 
 export const AuthenticateUser = async ({ req }: { req: any }) => {
 	// get the user token from the headers

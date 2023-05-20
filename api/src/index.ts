@@ -2,14 +2,14 @@ import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { DateTimeResolver } from 'graphql-scalars';
 import { typeDefs } from './typeDefs';
-import { getUsers } from './queries';
 import { AuthenticateUser } from './auth/context';
+import { userQueries } from './resolvers/user.resolvers';
 
 /** define all query resolvers here */
 const resolvers = {
 	DateTime: DateTimeResolver,
 	Query: {
-		users: getUsers
+		...userQueries
 	}
 };
 

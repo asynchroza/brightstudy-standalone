@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from './prisma.init';
 
 /** Gets all users from database */
 export const getUsers = () => {
@@ -15,4 +13,8 @@ export const getUserByToken = (token: string) => {
 	});
 
 	return user;
+};
+
+export const userQueries = {
+	users: getUsers
 };
