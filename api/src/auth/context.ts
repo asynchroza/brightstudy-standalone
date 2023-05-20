@@ -1,6 +1,6 @@
-import { GraphQLError } from 'graphql';
 import { isNil } from 'lodash';
 import { getUserByToken } from '../resolvers/user.resolvers';
+import { AuthErrors } from './errors';
 
 export const AuthenticateUser = async ({ req }: { req: any }) => {
 	// get the user token from the headers
@@ -15,12 +15,7 @@ export const AuthenticateUser = async ({ req }: { req: any }) => {
 	if (isNil(user))
 		// throwing a `GraphQLError` here allows us to specify an HTTP status code,
 		// standard `Error`s will have a 500 status code by default
-		throw new GraphQLError('User is not authenticated', {
-			extensions: {
-				code: 'UNAUTHENTICATED',
-				http: { status: 401 }
-			}
-		});
+		throw AuthErrors.unauthenticatedError;
 
 	// add the user to the context
 	return { user };
