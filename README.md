@@ -4,12 +4,23 @@ This is the containerized standalone which is being hosted for universities unde
 
 ## Running the project
 
-Prerequisites:
+### Prerequisites:
 
 - You need [turbo repo](https://turbo.build/repo/docs/installing) installed
 - `turbo install` to install all dependencies
 
-Commands:
+### Commands:
 
-- **How to start the client** - `turbo dev` (`yarn dev`)
-- **How to start the server** - `turbo server` (which will actually run `yarn server` within the `/api` directory)
+Client:
+
+- **Start the client** - `turbo dev` (`yarn dev`)
+
+Server:
+
+- **Start the server** - `turbo server` (which will actually run `yarn server` within the `/api` directory)
+
+Database:
+
+- **Start the database container** - `turbo db` (`yarn db` within the `/api` directory)
+- **How to migrate the database** - `yarn db:migrate` (within the `/api` directory)
+- **How to seed the database** - `yarn db:seed` (within the `/api` directory)
