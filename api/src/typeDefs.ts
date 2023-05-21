@@ -7,17 +7,18 @@ export const typeDefs = `#graphql
 
   type User {
     id: Int!
-    name: String!
-    createdAt: DateTime!
-    messages: [Message!]!
+    email: String!
+    password: String!
+    firstName: String
+    lastName: String
+    token: String
+    permissions: [Permission!]!
   }
 
-  type Message {
-    id: Int!
-    body: String!
-    createdAt: DateTime!
-    userId: Int!
-    user: User!
+  enum Permission {
+    ADMIN
+    PROFESSOR
+    STUDENT
   }
 
   type Query {

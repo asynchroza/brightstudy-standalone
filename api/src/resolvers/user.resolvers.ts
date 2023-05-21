@@ -1,14 +1,19 @@
 import { User } from '@prisma/client';
 import { prisma } from './prisma.init';
 import { verify } from 'jsonwebtoken';
+import { AuthErrors } from '../auth/errors';
 
 /** Gets all users from database */
 const getUsers = () => {
 	return prisma.user.findMany();
 };
 
-export const getUserByToken = (token: string) => {
-	if (!verify(token, 'secret')) return;
+export const getAndVerifyUserByToken = (token: string) => {
+	try {
+		verify(token, 'secret');
+	} catch {
+		throw AuthErrors.unauthenticatedError;
+	}
 
 	const user = prisma.user.findFirst({
 		where: {
