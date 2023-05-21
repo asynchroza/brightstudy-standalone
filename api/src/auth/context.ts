@@ -21,7 +21,7 @@ export const AuthenticateUser = async ({ req }: { req: any }) => {
 	const token = req.headers.authorization || '';
 
 	// try to retrieve a user with the token
-	const user = await getAndVerifyUserByToken(token);
+	const user = getAndVerifyUserByToken(token);
 
 	// TODO: we could also check user roles/permissions here
 	if (isNil(user)) throw AuthErrors.unauthenticatedError;

@@ -1,11 +1,11 @@
-import { loginUser, saveUserToken } from '../resolvers/user.resolvers';
+import { findUserByEmailAndPass, saveUserToken } from '../resolvers/user.resolvers';
 import jsonwebtoken from 'jsonwebtoken';
 import { isNil } from 'lodash';
 import { AuthErrors } from './errors';
 const { sign, decode, verify } = jsonwebtoken;
 
 const login = async (parent: any, { email, password }: { email: string; password: string }) => {
-	const user = await loginUser(email, password);
+	const user = await findUserByEmailAndPass(email, password);
 
 	if (isNil(user)) {
 		throw AuthErrors.unauthenticatedError;
@@ -24,6 +24,7 @@ const login = async (parent: any, { email, password }: { email: string; password
 	const expiresIn = '1h';
 
 	const token = sign(payload, secret, { expiresIn });
+
 	await saveUserToken(user.id, token);
 
 	return token;
