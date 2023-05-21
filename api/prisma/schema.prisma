@@ -16,6 +16,7 @@ model User {
   password    String
   firstName   String
   lastName    String
+  token       String
   permissions Permission[]
 }
 

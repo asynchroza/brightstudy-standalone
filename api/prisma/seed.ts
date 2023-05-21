@@ -13,7 +13,8 @@ async function main() {
 			lastName: 'Montana',
 			password: 'password',
 			email: 'tonimontana@gmail.com',
-			permissions: Permission.STUDENT
+			permissions: Permission.STUDENT,
+			token: 'default'
 		}
 	});
 
@@ -23,7 +24,8 @@ async function main() {
 			lastName: 'Be',
 			password: 'password',
 			email: 'kaybe@gmail.com',
-			permissions: Permission.ADMIN
+			permissions: Permission.ADMIN,
+			token: 'default'
 		}
 	});
 }
