@@ -9,7 +9,7 @@ export const getUsers = () => {
 export const getUserByToken = (token: string) => {
 	const user = prisma.user.findFirst({
 		where: {
-			name: token
+			// name: token
 		}
 	});
 
@@ -17,14 +17,14 @@ export const getUserByToken = (token: string) => {
 };
 
 // TODO: make it work with email and password
-export const loginUser = async (email: string, password?: string) => {
+export const loginUser = async (email: string, password: string) => {
 	const user = await prisma.user.findFirst({
 		where: {
-			name: email
+			email
 		}
 	});
 
-	return user;
+	if (user?.password === password) return user as User;
 };
 
 export const userQueries = {
