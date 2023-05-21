@@ -9,7 +9,8 @@
 		"db": "docker-compose -f ./db/docker-compose.dev.yaml up -d",
 		"db:migrate": "prisma migrate dev --name init",
 		"db:seed": "prisma db seed",
-		"db:studio": "prisma studio"
+		"db:studio": "prisma studio",
+		"db:reset": "prisma migrate reset"
 	},
 	"prisma": {
 		"seed": "ts-node-dev prisma/seed.ts"
