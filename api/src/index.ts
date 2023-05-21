@@ -6,6 +6,9 @@ import { AuthenticateUser } from './auth/context';
 import { userQueries } from './resolvers/user.resolvers';
 import { AuthMutations } from './auth/mutation';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
+
 /** define all query resolvers here */
 const resolvers = {
 	DateTime: DateTimeResolver,

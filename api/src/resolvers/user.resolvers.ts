@@ -10,7 +10,7 @@ const getUsers = () => {
 
 export const getAndVerifyUserByToken = (token: string) => {
 	try {
-		verify(token, 'secret');
+		verify(token, process.env.JWT_SECRET || '');
 	} catch {
 		throw AuthErrors.unauthenticatedError;
 	}
