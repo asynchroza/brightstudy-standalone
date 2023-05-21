@@ -11,16 +11,16 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  createdAt DateTime  @default(now())
-  messages  Message[]
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  password    String
+  firstName   String
+  lastName    String
+  permissions Permission[]
 }
 
-model Message {
-  id        Int      @id @default(autoincrement())
-  body      String
-  createdAt DateTime @default(now())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+enum Permission {
+  ADMIN
+  PROFESSOR
+  STUDENT
 }
