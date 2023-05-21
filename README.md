@@ -23,7 +23,7 @@ Server:
 
 Database:
 
-- **Start the database container** - `yarn db` (in root directory or in the `/api` directory)
+- **Start the database container** - `yarn db:start` (in root directory or in the `/api` directory)
 - **Migrate the database schema** - `yarn db:migrate` (in root directory or in the `/api` directory)
 - **Seed the database** - `yarn db:seed` (in root directory or in the `/api` directory)
 - **Explore data in Prisma studio** - `yarn db:studio` (in root directory or in the `/api`
