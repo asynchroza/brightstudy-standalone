@@ -2,7 +2,7 @@ import { isNil } from 'lodash';
 import { getAndVerifyUserByToken } from '../resolvers/user.resolvers';
 import { AuthErrors } from './errors';
 
-enum ALLOWED_OPERATIONS {
+export enum ALLOWED_OPERATIONS {
 	LOGIN = 'Login',
 	REGISTER = 'Register'
 }
