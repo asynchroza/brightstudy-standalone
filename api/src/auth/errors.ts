@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
 
-export const unauthenticatedError = new GraphQLError('User is not authenticated', {
+const unauthenticatedError = new GraphQLError('User is not authenticated', {
 	extensions: {
 		code: 'UNAUTHENTICATED',
 		http: { status: 401 }
