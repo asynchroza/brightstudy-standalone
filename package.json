@@ -9,7 +9,7 @@
 		"lint": "tsc",
 		"eslint": "eslint src --ext ts,tsx,json,js,jsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
-		"test": "jest --passWithNoTests",
+		"test": "jest --passWithNoTests --reporters default",
 		"server": "cd ./api && yarn server",
 		"db:start": "cd ./api && yarn db:start",
 		"db:migrate": "cd ./api && yarn db:migrate",
