@@ -2,6 +2,7 @@ import { findUserByEmailAndPass, saveUserToken } from '../resolvers/user.resolve
 import jsonwebtoken from 'jsonwebtoken';
 import { isNil } from 'lodash';
 import { AuthErrors } from './errors';
+import { getJWTSecret } from './utils';
 const { sign, decode, verify } = jsonwebtoken;
 
 const login = async (parent: any, { email, password }: { email: string; password: string }) => {
@@ -20,7 +21,7 @@ const login = async (parent: any, { email, password }: { email: string; password
 		}
 	};
 
-	const secret = process.env.JWT_SECRET || '';
+	const secret = getJWTSecret();
 	const expiresIn = '1h';
 
 	const token = sign(payload, secret, { expiresIn });

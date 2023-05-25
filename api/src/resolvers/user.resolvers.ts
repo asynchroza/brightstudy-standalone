@@ -2,6 +2,7 @@ import { User } from '@prisma/client';
 import { prisma } from './prisma.init';
 import { verify } from 'jsonwebtoken';
 import { AuthErrors } from '../auth/errors';
+import { getJWTSecret } from '../auth/utils';
 
 /** Gets all users from database */
 const getUsers = () => {
@@ -15,7 +16,7 @@ const getUsers = () => {
  */
 export const getAndVerifyUserByToken = (token: string): User => {
 	try {
-		verify(token, process.env.JWT_SECRET || '');
+		verify(token, getJWTSecret());
 	} catch {
 		throw AuthErrors.unauthenticatedError;
 	}
