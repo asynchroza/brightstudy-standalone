@@ -3,24 +3,27 @@ import { AuthenticateUser } from '../context';
 import { AuthErrors } from '../errors';
 import { User } from '@prisma/client';
 
-jest.mock('../../resolvers/user.resolvers', () => ({
-	getAndVerifyUserByToken: jest.fn()
-}));
+jest.mock('../../resolvers/user.resolvers');
 
 import { getAndVerifyUserByToken } from '../../resolvers/user.resolvers';
 
-const mockedReq: any = {
-	req: {
-		body: {
-			operationName: 'OPERATION'
-		},
-		headers: {
-			authorization: 'some-token'
-		}
-	}
-};
-
 describe('AuthenticateUser', () => {
+	let mockedReq: any;
+
+	beforeEach(() => {
+		mockedReq = {
+			req: {
+				body: {
+					operationName: 'OPERATION'
+				},
+				headers: {
+					authorization: 'some-token'
+				}
+			}
+		};
+		jest.clearAllMocks();
+	});
+
 	describe('Allowed operations', () => {
 		it('returns empty object when operation is LOGIN', async () => {
 			mockedReq.req.body.operationName = ALLOWED_OPERATIONS.LOGIN;
@@ -34,12 +37,7 @@ describe('AuthenticateUser', () => {
 			expect(response).toStrictEqual({});
 		});
 	});
-
 	describe('Authenticate user', () => {
-		beforeEach(() => {
-			jest.clearAllMocks();
-		});
-
 		it('throws authorization exception when user is not validated', async () => {
 			// getAndVerifyUserByToken.mockReturnValue(undefined);
 			try {
@@ -60,10 +58,10 @@ describe('AuthenticateUser', () => {
 			} as User;
 
 			(getAndVerifyUserByToken as jest.Mock).mockReturnValue(mockedResponse);
-			const res = await AuthenticateUser(mockedReq);
-			console.log(res);
+			console.log(getAndVerifyUserByToken('token'));
 
-			// TODO: Fix mock which is not working
+			const res = await AuthenticateUser(mockedReq);
+
 			expect(res.user?.firstName).toBe(mockedResponse.firstName);
 		});
 	});
