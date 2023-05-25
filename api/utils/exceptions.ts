@@ -1,13 +1,17 @@
 import logger from './logger';
 
-const LoggedError = (error: string | Error): Error => {
+const throwLoggedException = (error: string | Error) => {
+	if (typeof jest !== undefined) {
+		return;
+	}
+
 	if (typeof error === 'string') {
 		logger.error(error);
-		return new Error(error);
+		throw new Error(error);
 	} else {
 		logger.error(error.message);
-		return error;
+		throw error;
 	}
 };
 
-export default LoggedError;
+export default throwLoggedException;
