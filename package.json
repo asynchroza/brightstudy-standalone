@@ -16,6 +16,7 @@
 		"db:seed": "cd ./api && yarn db:seed",
 		"db:studio": "cd ./api && yarn db:studio",
 		"install:all": "yarn install && cd ./api && yarn install",
+		"test:api": "yarn test --rootDir=api",
 		"start": "yarn dev"
 	},
 	"dependencies": {
