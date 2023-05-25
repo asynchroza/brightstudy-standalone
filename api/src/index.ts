@@ -5,6 +5,7 @@ import { typeDefs } from './typeDefs';
 import { AuthenticateUser } from './auth/context';
 import { userQueries } from './resolvers/user.resolvers';
 import { AuthMutations } from './auth/mutation';
+import logger from '../utils/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -27,5 +28,6 @@ startStandaloneServer(server, { listen: { port: 4000 }, context: AuthenticateUse
 		console.log(`Server running at ${url}`);
 	})
 	.catch((error) => {
+		logger.fatal(`Server stopped running due to the following error: ${error}`);
 		console.error('Error starting server:', error);
 	});
