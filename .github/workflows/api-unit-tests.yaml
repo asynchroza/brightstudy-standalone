@@ -1,4 +1,4 @@
-name: Run Yarn Test
+name: Global Unit Tests
 
 on: [push]
 
