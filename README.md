@@ -28,3 +28,16 @@ Database:
 - **Seed the database** - `yarn db:seed` (in root directory or in the `/api` directory)
 - **Explore data in Prisma studio** - `yarn db:studio` (in root directory or in the `/api`
   directory)
+
+### HOW-TOs:
+
+Login using GQL sandbox:
+
+```graphql
+mutation Login($email: String!, $password: String) {
+	login(email: $email, password: $password)
+}
+```
+
+**NB!** You will need to pass the token generated upon login in an **Authorization** header in order
+to be able to see schemas and do queries.
