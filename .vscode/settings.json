@@ -4,7 +4,6 @@
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 	"prisma.fileWatcher": true,
-	"jest.command": "yarn test",
 	"jest.autoRun": {
 		"watch": true
 	}

@@ -37,6 +37,7 @@ describe('AuthenticateUser', () => {
 			expect(response).toStrictEqual({});
 		});
 	});
+
 	describe('Authenticate user', () => {
 		it('throws authorization exception when user is not validated', async () => {
 			// getAndVerifyUserByToken.mockReturnValue(undefined);
@@ -58,7 +59,6 @@ describe('AuthenticateUser', () => {
 			} as User;
 
 			(getAndVerifyUserByToken as jest.Mock).mockReturnValue(mockedResponse);
-			console.log(getAndVerifyUserByToken('token'));
 
 			const res = await AuthenticateUser(mockedReq);
 
