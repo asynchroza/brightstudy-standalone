@@ -1,8 +1,8 @@
-import { ApolloServer } from '@apollo/server';
+import { ApolloServer, ApolloServerOptions } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { DateTimeResolver } from 'graphql-scalars';
 import { typeDefs } from './typeDefs';
-import { AuthenticateUser } from './auth/context';
+import { authenticateUser } from './auth/context';
 import { userQueries } from './resolvers/user.resolvers';
 import { AuthMutations } from './auth/mutation';
 import logger from '../utils/logger';
@@ -21,9 +21,22 @@ const resolvers = {
 	}
 };
 
+const combinedCtx = async ({ req, res }: { req: any; res: any }) => {
+	const passthroughCtx = { req, res };
+
+	const authenticatedUser = await authenticateUser({ req });
+
+	const mergedCtx = {
+		...authenticatedUser,
+		...passthroughCtx
+	};
+
+	return mergedCtx;
+};
+
 const server = new ApolloServer({ resolvers, typeDefs });
 
-startStandaloneServer(server, { listen: { port: 4000 }, context: AuthenticateUser })
+startStandaloneServer(server, { listen: { port: 4000 }, context: combinedCtx })
 	.then(({ url }) => {
 		console.log(`Server running at ${url}`);
 	})

@@ -5,7 +5,7 @@ import { AuthErrors } from './errors';
 import { getJWTSecret } from './utils';
 const { sign, decode, verify } = jsonwebtoken;
 
-const login = async (parent: any, { email, password }: { email: string; password: string }) => {
+const login = async (parent: any, { email, password }: { email: string; password: string }, context: any) => {
 	const user = await findUserByEmailAndPass(email, password);
 
 	if (isNil(user)) {
@@ -28,7 +28,11 @@ const login = async (parent: any, { email, password }: { email: string; password
 
 	await saveUserToken(user.id, token);
 
-	return token;
+	const cookieName = 'x-bs-jwt';
+
+	context.res.set('Set-Cookie', `${cookieName}=${token}; Path=/; Expires=${expiresIn}; HttpOnly; Secure`);
+
+	return 'success';
 };
 
 export const AuthMutations = {

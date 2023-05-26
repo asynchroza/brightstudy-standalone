@@ -32,11 +32,15 @@ describe('login', () => {
 		const email = 'john@example.com';
 		const password = 'password';
 
+		const ctx = {
+			res: new Map()
+		};
+
 		// Call the login function
-		const result = await AuthMutations.login(null, { email, password });
+		const result = await AuthMutations.login(null, { email, password }, ctx);
 
 		// Verify the expected behavior
-		expect(result).toBe(token); // Check if the token is returned
+		expect(result).toBe('success'); // Check if the token is returned
 
 		// Verify the function calls
 		expect(findUserByEmailAndPass).toHaveBeenCalledWith(email, password);
@@ -66,7 +70,7 @@ describe('login', () => {
 		const password = 'password';
 
 		// Call the login function and expect it to throw an error
-		await expect(AuthMutations.login(null, { email, password })).rejects.toThrow(AuthErrors.unauthenticatedError);
+		await expect(AuthMutations.login(null, { email, password }, {})).rejects.toThrow(AuthErrors.unauthenticatedError);
 
 		// Verify the function call
 		expect(findUserByEmailAndPass).toHaveBeenCalledWith(email, password);

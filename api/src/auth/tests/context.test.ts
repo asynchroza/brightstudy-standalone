@@ -1,5 +1,5 @@
 import { ALLOWED_OPERATIONS } from '../context';
-import { AuthenticateUser } from '../context';
+import { authenticateUser } from '../context';
 import { AuthErrors } from '../errors';
 import { User } from '@prisma/client';
 
@@ -27,13 +27,13 @@ describe('AuthenticateUser', () => {
 	describe('Allowed operations', () => {
 		it('returns empty object when operation is LOGIN', async () => {
 			mockedReq.req.body.operationName = ALLOWED_OPERATIONS.LOGIN;
-			const response = await AuthenticateUser(mockedReq);
+			const response = await authenticateUser(mockedReq);
 			expect(response).toStrictEqual({});
 		});
 
 		it('returns empty object when operation is REGISTER', async () => {
 			mockedReq.req.body.operationName = ALLOWED_OPERATIONS.REGISTER;
-			const response = await AuthenticateUser(mockedReq);
+			const response = await authenticateUser(mockedReq);
 			expect(response).toStrictEqual({});
 		});
 	});
@@ -42,7 +42,7 @@ describe('AuthenticateUser', () => {
 		it('throws authorization exception when user is not validated', async () => {
 			// getAndVerifyUserByToken.mockReturnValue(undefined);
 			try {
-				await AuthenticateUser(mockedReq);
+				await authenticateUser(mockedReq);
 			} catch (err) {
 				expect(err).toBe(AuthErrors.unauthenticatedError);
 			}
@@ -60,7 +60,7 @@ describe('AuthenticateUser', () => {
 
 			(getAndVerifyUserByToken as jest.Mock).mockReturnValue(mockedResponse);
 
-			const res = await AuthenticateUser(mockedReq);
+			const res = await authenticateUser(mockedReq);
 
 			expect(res.user?.firstName).toBe(mockedResponse.firstName);
 		});

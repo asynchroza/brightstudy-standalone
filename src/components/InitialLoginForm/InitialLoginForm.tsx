@@ -6,6 +6,13 @@
 
 import { RegisterOptions, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { gql, useMutation } from '@apollo/client';
+
+const LOGIN_MUTATION = gql`
+	mutation Login($email: String!, $password: String) {
+		login(email: $email, password: $password)
+	}
+`;
 
 const StyledContainer = styled.div`
 	position: absolute;
@@ -21,6 +28,19 @@ type LoginFormInputs = {
 };
 
 const InitialLoginForm = () => {
+	const [login] = useMutation(LOGIN_MUTATION);
+
+	const handleLogin = async (email: string, password: string) => {
+		try {
+			const { data } = await login({ variables: { email, password } });
+			// Handle successful login
+			console.log(data);
+		} catch (error) {
+			// Handle error
+			console.error(error);
+		}
+	};
+
 	const {
 		register,
 		handleSubmit,
@@ -28,7 +48,7 @@ const InitialLoginForm = () => {
 	} = useForm<LoginFormInputs>();
 
 	const onSubmit = (data: LoginFormInputs) => {
-		console.log(data);
+		handleLogin(data.email, data.password);
 	};
 
 	return (

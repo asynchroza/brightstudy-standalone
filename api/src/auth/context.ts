@@ -11,7 +11,7 @@ function isAllowedOperation(operationName: string): boolean {
 	return Object.values(ALLOWED_OPERATIONS).includes(operationName as ALLOWED_OPERATIONS);
 }
 
-export const AuthenticateUser = async ({ req }: { req: any }) => {
+export const authenticateUser = async ({ req }: { req: any }) => {
 	// get the user token from the headers
 	const { operationName } = req.body;
 
