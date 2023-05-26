@@ -7,6 +7,7 @@
 import { RegisterOptions, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN_MUTATION = gql`
 	mutation Login($email: String!, $password: String) {
@@ -28,15 +29,15 @@ type LoginFormInputs = {
 };
 
 const InitialLoginForm = () => {
-	const [login] = useMutation(LOGIN_MUTATION);
+	const navigate = useNavigate();
+
+	const [login, { loading }] = useMutation(LOGIN_MUTATION);
 
 	const handleLogin = async (email: string, password: string) => {
 		try {
-			const { data } = await login({ variables: { email, password } });
-			// Handle successful login
-			console.log(data);
+			await login({ variables: { email, password } });
+			navigate('/administration');
 		} catch (error) {
-			// Handle error
 			console.error(error);
 		}
 	};
@@ -82,7 +83,7 @@ const InitialLoginForm = () => {
 					{errors.password && <p>{errors.password.message}</p>}
 				</div>
 
-				<button type="submit">Submit</button>
+				<button type="submit">{loading ? 'Loading' : 'Submit'}</button>
 			</form>
 		</StyledContainer>
 	);
