@@ -16,8 +16,11 @@ const LOGIN_MUTATION = gql`
 `;
 
 const StyledContainer = styled.div`
+	// TODO: remove absolute position and import element in a page (container)
+	// where you will define the positions of components
 	position: absolute;
 	background-color: silver;
+
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
