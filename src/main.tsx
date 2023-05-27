@@ -5,17 +5,30 @@ import './index.css';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './graphql/index.ts';
 
-import AdministrationPanel from './pages/AdministrationPanel';
+import AdministrationPanel from './pages/AdministrationPanel/AdministrationPanel.tsx';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import PrivateComponentWrapper from './components/AuthRoute/AuthRoute.tsx';
+import LoginPage from './pages/LoginPage/LoginPage.tsx';
 
 const router = createBrowserRouter(
 	createRoutesFromElements([
 		<Route path="/" element={<App />} />,
-		<Route path="login" element={<h1>404</h1>} />,
+		<Route path="login" element={<LoginPage />} />,
 		<Route
 			path="administration"
-			element={<PrivateComponentWrapper redirectPath={'/test'} isAuthenticated={() => true} children={<AdministrationPanel />} />}
+			element={
+				<PrivateComponentWrapper
+					redirectPath={'/login'}
+					isAuthenticated={async () => {
+						return new Promise((resolve) =>
+							setTimeout(() => {
+								resolve(true);
+							}, 2000)
+						);
+					}}
+					children={<AdministrationPanel />}
+				/>
+			}
 		/>
 	])
 );
