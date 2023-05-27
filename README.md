@@ -43,3 +43,17 @@ mutation Login($email: String!, $password: String) {
 
 **NB!** You will need to pass the token generated upon login in an **Authorization** header in order
 to be able to see schemas and do queries.
+
+## Controlled Pages Workflow
+
+### Portal Initialization
+
+During the initial deployment, clients will receive an admin account. This account should be used
+for the first login into the portal. The login process for the initial login is handled through the
+`/initialLogin` endpoint. Upon successful login, the user will be directed to the administration
+panel.
+
+The admin account is responsible for creating new admin accounts that will be used by the
+university's admins.
+
+For all subsequent logins, users should use the `/login` endpoint.

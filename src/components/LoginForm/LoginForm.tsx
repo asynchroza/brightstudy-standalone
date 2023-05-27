@@ -31,15 +31,20 @@ type LoginFormInputs = {
 	password: string;
 };
 
-const InitialLoginForm = () => {
-	const navigate = useNavigate();
-
+const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 	const [login, { loading }] = useMutation(LOGIN_MUTATION);
+	const navigate = useNavigate();
 
 	const handleLogin = async (email: string, password: string) => {
 		try {
 			await login({ variables: { email, password } });
-			navigate('/administration');
+			/* 
+				The process of transitioning from the login form to the administration panel or landing page 
+				involves two mutations: login and user verification. This is because the login form 
+				and user verification components are rendered on the client side, 
+				and no user sensitive data that will be displayed is fetched during this process.
+			*/
+			initialLogin ? navigate('/administration') : navigate('/home');
 		} catch (error) {
 			console.error(error);
 		}
@@ -92,4 +97,4 @@ const InitialLoginForm = () => {
 	);
 };
 
-export default InitialLoginForm;
+export default LoginForm;

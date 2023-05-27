@@ -1,7 +1,7 @@
-import InitialLoginForm from '../../components/InitialLoginForm/InitialLoginForm';
+import LoginForm from '../../components/LoginForm/LoginForm';
 
-const LoginPage = () => {
-	return <InitialLoginForm />;
+const LoginPage = ({ initialLogin = false }: { initialLogin?: boolean }) => {
+	return <LoginForm initialLogin={initialLogin} />;
 };
 
 export default LoginPage;

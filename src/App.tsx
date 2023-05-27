@@ -1,9 +1,7 @@
-import InitialLoginForm from './components/InitialLoginForm/InitialLoginForm';
-
 function App() {
 	return (
 		<>
-			<InitialLoginForm />
+			<h1>HELLO WORLD</h1>
 		</>
 	);
 }
