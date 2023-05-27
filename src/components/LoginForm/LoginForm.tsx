@@ -10,6 +10,7 @@ import { gql, useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { FaUserAlt, FaFingerprint } from 'react-icons/fa';
 import { InputField } from './InputField';
+import { useState } from 'react';
 
 const LOGIN_MUTATION = gql`
 	mutation Login($email: String!, $password: String) {
@@ -33,8 +34,21 @@ type LoginFormInputs = {
 	password: string;
 };
 
+const StyledButton = styled.button`
+	margin-top: 1rem;
+	width: 7.5rem;
+	height: 3rem;
+	background-color: black;
+	color: white;
+	font-size: medium;
+	font-family: Roboto;
+	font-weight: 700;
+	padding: 0.5rem;
+	border-radius: 10%;
+`;
+
 const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
-	const [login, { loading }] = useMutation(LOGIN_MUTATION);
+	const [login] = useMutation(LOGIN_MUTATION);
 	const navigate = useNavigate();
 
 	const handleLogin = async (email: string, password: string) => {
@@ -74,6 +88,8 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 
 	// https://colorlib.com/wp/html5-and-css3-login-forms/
 
+	const [isFocusDisabled, setDisabledFocus] = useState(false);
+
 	return (
 		<StyledContainer>
 			<form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +106,10 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 					}}
 					register={register}
 					Icon={FaUserAlt}
-					error={errors.email}
+					isFocusDisabled={isFocusDisabled}
+					primaryColor="black"
+					focusedColor="#7b68ee"
+					forwardedRef={errors?.email?.ref}
 				/>
 				<InputField
 					label="PASSWORD"
@@ -101,9 +120,21 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 					}}
 					register={register}
 					Icon={FaFingerprint}
-					error={errors.password}
+					primaryColor="black"
+					focusedColor="#7b68ee"
+					forwardedRef={errors?.password?.ref}
 				/>
-				<button type="submit">{loading ? 'Loading' : 'SIGN IN'}</button>
+				<StyledButton
+					type="submit"
+					onClick={() => {
+						setDisabledFocus(true);
+					}}
+					onMouseLeave={() => {
+						setDisabledFocus(false);
+					}}
+				>
+					{'SIGN IN'}
+				</StyledButton>
 			</form>
 		</StyledContainer>
 	);
