@@ -4,10 +4,12 @@
     which allows them to create new accounts and subsequently delete the admin account. 
 */
 
-import { RegisterOptions, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import { FaUserAlt, FaFingerprint } from 'react-icons/fa';
+import { InputField } from './InputField';
 
 const LOGIN_MUTATION = gql`
 	mutation Login($email: String!, $password: String) {
@@ -16,14 +18,14 @@ const LOGIN_MUTATION = gql`
 `;
 
 const StyledContainer = styled.div`
-	// TODO: remove absolute position and import element in a page (container)
-	// where you will define the positions of components
-	position: absolute;
-	background-color: silver;
-
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	background-color: white;
+	width: 30rem;
+	height: 40rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	border-radius: 1%;
 `;
 
 type LoginFormInputs = {
@@ -64,42 +66,44 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 		formState: { errors }
 	} = useForm<LoginFormInputs>();
 
+	console.log(errors);
+
 	const onSubmit = (data: LoginFormInputs) => {
 		handleLogin(data.email, data.password);
 	};
 
+	// https://colorlib.com/wp/html5-and-css3-login-forms/
+
 	return (
 		<StyledContainer>
-			<h1>BRIGHTSTUDY</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div>
-					<label>Email:</label>
-					<input
-						type="text"
-						{...register('email', {
-							required: 'Email is required',
-							pattern: {
-								value: /^\S+@\S+$/i,
-								message: 'Invalid email address'
-							}
-						} as RegisterOptions)}
-					/>
-					{errors.email && <p>{errors.email.message}</p>}
-				</div>
-
-				<div>
-					<label>Password:</label>
-					<input
-						type="password"
-						{...register('password', {
-							required: 'Password is required'
-						} as RegisterOptions)}
-					/>
-
-					{errors.password && <p>{errors.password.message}</p>}
-				</div>
-
-				<button type="submit">{loading ? 'Loading' : 'Submit'}</button>
+				<InputField
+					label="EMAIL"
+					inputType="text"
+					inputName="email"
+					registerOptions={{
+						required: 'Email is required',
+						pattern: {
+							value: /^\S+@\S+$/i,
+							message: 'Invalid email address'
+						}
+					}}
+					register={register}
+					Icon={FaUserAlt}
+					error={errors.email}
+				/>
+				<InputField
+					label="PASSWORD"
+					inputName="password"
+					inputType="password"
+					registerOptions={{
+						required: 'Password is required'
+					}}
+					register={register}
+					Icon={FaFingerprint}
+					error={errors.password}
+				/>
+				<button type="submit">{loading ? 'Loading' : 'SIGN IN'}</button>
 			</form>
 		</StyledContainer>
 	);
