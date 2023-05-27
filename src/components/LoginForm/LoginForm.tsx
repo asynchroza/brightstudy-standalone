@@ -48,6 +48,9 @@ const StyledButton = styled.button`
 `;
 
 const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
+	// TODO: primaryColor, focusedColor should be dynamically loaded from the user's preferences
+	// TODO: Login form should display a notification when there are erroring fields
+
 	const [login] = useMutation(LOGIN_MUTATION);
 	const navigate = useNavigate();
 
@@ -83,8 +86,6 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 	const onSubmit = (data: LoginFormInputs) => {
 		handleLogin(data.email, data.password);
 	};
-
-	// https://colorlib.com/wp/html5-and-css3-login-forms/
 
 	const [isFocusDisabled, setDisabledFocus] = useState(false);
 
