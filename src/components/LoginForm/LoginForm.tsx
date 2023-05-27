@@ -39,10 +39,18 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 		try {
 			await login({ variables: { email, password } });
 			/* 
-				The process of transitioning from the login form to the administration panel or landing page 
-				involves two mutations: login and user verification. This is because the login form 
-				and user verification components are rendered on the client side, 
-				and no user sensitive data that will be displayed is fetched during this process.
+				The process of transitioning from the login form to the administration panel or landing page involves two mutations: 
+				- login and user verification. 
+				
+				Since we're working predominantly with the client side here, 
+				there is no easy way for us to appropriately disable the rendered view 
+				other than verifying each location change (use <PrivateComponentWrapper/>). 
+
+				This can still be intercepted by Burp, for example, and someone who is really motivated to see what the admin panel 
+				looks like will be more than free to do so. 
+
+				Although no sensitive information will be displayed because token verification and 
+				data generation always happen on the server.
 			*/
 			initialLogin ? navigate('/administration') : navigate('/home');
 		} catch (error) {

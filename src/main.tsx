@@ -7,7 +7,7 @@ import { client } from './graphql/index.ts';
 
 import AdministrationPanel from './pages/AdministrationPanel/AdministrationPanel.tsx';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import PrivateComponentWrapper from './components/AuthRoute/AuthRoute.tsx';
+import PrivateComponentWrapper from './components/PrivateComponetWrapper/PrivateComponentWrapper.tsx';
 import LoginPage from './pages/LoginPage/LoginPage.tsx';
 
 const router = createBrowserRouter(
