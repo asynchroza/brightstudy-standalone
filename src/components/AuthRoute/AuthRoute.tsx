@@ -10,6 +10,7 @@ type AuthRouteProps = {
 const PrivateComponentWrapper = ({ isAuthenticated, children, redirectPath = '/' }: AuthRouteProps) => {
 	const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
 
+	// TODO: this might be an apollo hook, so none of this unbearable code will be needed
 	useEffect(() => {
 		const checkAuth = async () => {
 			const isAuth = await isAuthenticated();
