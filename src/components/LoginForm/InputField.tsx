@@ -1,4 +1,4 @@
-import { FC, Ref, useEffect, useState } from 'react';
+import React, { FC, Ref, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RegisterOptions, UseFormRegister } from 'react-hook-form';
 
@@ -63,18 +63,7 @@ const onBlurHandler = (setState: (value: React.SetStateAction<string>) => void, 
 	setState(color);
 };
 
-export const InputField = ({
-	register,
-	registerOptions,
-	inputName,
-	inputType,
-	Icon,
-	label,
-	isFocusDisabled,
-	primaryColor,
-	focusedColor,
-	forwardedRef
-}: {
+export const InputField: FC<{
 	// eslint-disable-next-line
 	register: UseFormRegister<any>;
 	inputName: string;
@@ -88,38 +77,40 @@ export const InputField = ({
 	// eslint-disable-next-line
 	// @ts-ignore
 	forwardedRef?: Ref | undefined;
-}) => {
-	const [color, setColor] = useState(primaryColor);
+}> = React.memo(
+	({ register, inputName, registerOptions, inputType, Icon, label, isFocusDisabled, primaryColor, focusedColor, forwardedRef }) => {
+		const [color, setColor] = useState(primaryColor);
 
-	useEffect(() => {
-		if (isFocusDisabled && forwardedRef) {
-			forwardedRef.blur();
+		useEffect(() => {
+			if (isFocusDisabled && forwardedRef) {
+				forwardedRef.blur();
 
-			if (color !== primaryColor) {
-				onBlurHandler(setColor, primaryColor);
+				if (color !== primaryColor) {
+					onBlurHandler(setColor, primaryColor);
+				}
 			}
-		}
-	}, [isFocusDisabled, forwardedRef, setColor, primaryColor, color]);
+		}, [isFocusDisabled, forwardedRef, setColor, primaryColor, color]);
 
-	return (
-		<InputContainer color={color}>
-			<label>{label}</label>
-			<br />
-			<InputFieldContainer>
-				<InputIconBox color={color}>
-					<Icon />
-				</InputIconBox>
-				<input
-					{...register(inputName, registerOptions)}
-					type={inputType}
-					onFocus={() => {
-						setColor(focusedColor);
-					}}
-					onBlur={() => {
-						onBlurHandler(setColor, primaryColor);
-					}}
-				/>
-			</InputFieldContainer>
-		</InputContainer>
-	);
-};
+		return (
+			<InputContainer color={color}>
+				<label>{label}</label>
+				<br />
+				<InputFieldContainer>
+					<InputIconBox color={color}>
+						<Icon />
+					</InputIconBox>
+					<input
+						{...register(inputName, registerOptions)}
+						type={inputType}
+						onFocus={() => {
+							setColor(focusedColor);
+						}}
+						onBlur={() => {
+							onBlurHandler(setColor, primaryColor);
+						}}
+					/>
+				</InputFieldContainer>
+			</InputContainer>
+		);
+	}
+);

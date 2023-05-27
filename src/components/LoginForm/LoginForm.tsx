@@ -80,8 +80,6 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 		formState: { errors }
 	} = useForm<LoginFormInputs>();
 
-	console.log(errors);
-
 	const onSubmit = (data: LoginFormInputs) => {
 		handleLogin(data.email, data.password);
 	};
