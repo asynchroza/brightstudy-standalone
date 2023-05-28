@@ -42,8 +42,14 @@ const combinedCtx = async ({ req, res }: { req: any; res: any }) => {
 };
 
 const app = express();
-// Read the SSL certificate files
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use((req, res, next) => {
+	logger.info(`[${req.method}][${JSON.stringify(req.body)}]`);
+	next();
+});
 
+// Read the SSL certificate files
 const key = path.resolve(__dirname, '../../certs/localhost.key');
 const cert = path.resolve(__dirname, '../../certs/localhost.crt');
 
