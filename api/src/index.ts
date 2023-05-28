@@ -1,11 +1,18 @@
-import { ApolloServer, ApolloServerOptions } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import { ApolloServer } from '@apollo/server';
 import { DateTimeResolver } from 'graphql-scalars';
 import { typeDefs } from './typeDefs';
 import { authenticateUser } from './auth/context';
 import { userQueries } from './resolvers/user.resolvers';
 import { AuthMutations } from './auth/mutation';
+import express from 'express';
+import { expressMiddleware } from '@apollo/server/express4';
+import fs from 'fs';
 import logger from '../utils/logger';
+import bodyParser from 'body-parser';
+import https from 'https';
+import cors from 'cors';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import path from 'path';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
@@ -34,13 +41,37 @@ const combinedCtx = async ({ req, res }: { req: any; res: any }) => {
 	return mergedCtx;
 };
 
-const server = new ApolloServer({ resolvers, typeDefs });
+const app = express();
+// Read the SSL certificate files
 
-startStandaloneServer(server, { listen: { port: 4000 }, context: combinedCtx })
-	.then(({ url }) => {
-		console.log(`Server running at ${url}`);
-	})
-	.catch((error) => {
-		logger.fatal(`Server stopped running due to the following error: ${error}`);
-		console.error('Error starting server:', error);
-	});
+const key = path.resolve(__dirname, '../../certs/localhost.key');
+const cert = path.resolve(__dirname, '../../certs/localhost.crt');
+
+const sslOptions = {
+	key: fs.readFileSync(key),
+	cert: fs.readFileSync(cert)
+};
+
+// eslint-disable-next-line
+// @ts-ignore
+const httpServer = https.createServer(sslOptions, app);
+
+const server = new ApolloServer({ resolvers, typeDefs, plugins: [ApolloServerPluginDrainHttpServer({ httpServer })] });
+
+(async () => {
+	await server.start();
+
+	app.use(
+		'/',
+		cors<cors.CorsRequest>(),
+		// 50mb is the limit that `startStandaloneServer` uses, but you may configure this to suit your needs
+		bodyParser.json({ limit: '50mb' }),
+		// expressMiddleware accepts the same arguments:
+		// an Apollo Server instance and optional configuration options
+		expressMiddleware(server, {
+			context: combinedCtx
+		})
+	);
+
+	await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve));
+})();

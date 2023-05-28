@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaUserAlt, FaFingerprint } from 'react-icons/fa';
 import { InputField } from './InputField';
 import { useState } from 'react';
+import { getCookie } from '../../utils/cookies';
+import { COOKIES } from '../../utils/constants';
 
 const LOGIN_MUTATION = gql`
 	mutation Login($email: String!, $password: String) {
@@ -76,7 +78,11 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 				Although no sensitive information will be displayed because token verification and 
 				data generation always happen on the server.
 			*/
+
 			initialLogin ? navigate('/administration') : navigate('/home');
+
+			// TODO: resolve issue with cookie not being set when response is handled
+			console.log(getCookie(COOKIES.jwtToken));
 		} catch (error) {
 			console.error(error);
 		}
