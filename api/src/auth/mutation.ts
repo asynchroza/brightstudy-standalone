@@ -31,6 +31,12 @@ const login = async (parent: any, { email, password }: { email: string; password
 	const jwtTokenCookie = 'x-bs-jwt';
 	const permissionsCookie = 'x-user-perms';
 
+	/*
+	We use the permissions cookie for the following purposes:
+	1. Checking whether we should display administration options in the navigation.
+	2. Checking whether a SUPER ADMIN user is using the login form and redirecting them to the admin panel.
+	*/
+
 	context.res.set('Set-Cookie', [
 		`${jwtTokenCookie}=${token}; Path=/; Expires=${expiresIn}; HttpOnly; Secure`,
 		`${permissionsCookie}=${payload.brightstudy.permissions}; Path=/`
