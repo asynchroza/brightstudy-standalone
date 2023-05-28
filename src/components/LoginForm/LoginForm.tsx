@@ -45,6 +45,11 @@ const StyledButton = styled.button`
 	font-weight: 700;
 	padding: 0.5rem;
 	border-radius: 10%;
+	border: none;
+
+	&:active {
+		background-color: #7b68ee;
+	}
 `;
 
 const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
@@ -91,6 +96,8 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 
 	return (
 		<StyledContainer>
+			<p>{errors.email && errors.email.message}</p>
+			<p>{errors.password && errors.password.message}</p>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<InputField
 					label="EMAIL"
@@ -119,6 +126,7 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 					}}
 					register={register}
 					Icon={FaFingerprint}
+					isFocusDisabled={isFocusDisabled}
 					primaryColor="black"
 					focusedColor="#7b68ee"
 					forwardedRef={errors?.password?.ref}
