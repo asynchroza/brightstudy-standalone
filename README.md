@@ -48,18 +48,18 @@ to be able to see schemas and do queries.
 
 ### Portal Initialization
 
-During the initial deployment, clients will receive an admin account. This account should be used
-for the first login into the portal. The login process for the initial login is handled through the
-`/initialLogin` endpoint. Upon successful login, the user will be directed to the administration
-panel.
+During the initial deployment, clients will receive a super admin account. This account should be
+used for the first login into the portal. The login process for the initial login is handled through
+the `/login` endpoint. Upon successful login, the user will be directed to the administration panel.
 
 The admin account is responsible for creating new admin accounts that will be used by the
 university's admins.
 
-For all subsequent logins, users should use the `/login` endpoint.
+For all subsequent logins, users may use the same `/login` endpoint but will be redirected to the
+`home` page instead.
 
-### SSL
+## SSL
 
 Self-signed certificates to be found in `/certs`.  
-Password is `misho1234`. You need to install them to be able to make requests towards the client &
-API servers.
+You need to install them to be able to make requests towards the client & API servers.  
+Password: `misho1234`
