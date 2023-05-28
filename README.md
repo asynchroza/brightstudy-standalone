@@ -57,3 +57,9 @@ The admin account is responsible for creating new admin accounts that will be us
 university's admins.
 
 For all subsequent logins, users should use the `/login` endpoint.
+
+### SSL
+
+Self-signed certificates to be found in `/certs`.  
+Password is `misho1234`. You need to install them to be able to make requests towards the client &
+API servers.
