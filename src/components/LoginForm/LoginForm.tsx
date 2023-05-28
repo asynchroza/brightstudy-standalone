@@ -54,7 +54,7 @@ const StyledButton = styled.button`
 	}
 `;
 
-const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
+const LoginForm = () => {
 	// TODO: primaryColor, focusedColor should be dynamically loaded from the user's preferences
 	// TODO: Login form should display a notification when there are erroring fields
 
@@ -79,10 +79,8 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 				data generation always happen on the server.
 			*/
 
-			// initialLogin ? navigate('/administration') : navigate('/home');
-
-			// TODO: resolve issue with cookie not being set when response is handled
-			console.log(`JWT-COOKIE: ${getCookie(COOKIES.jwtToken)}`);
+			// TODO: ADMIN should be replaced for SUPER ADMIN, and permissions should be defined in enum
+			getCookie(COOKIES.userPermissions) === 'ADMIN' ? navigate('/administration') : navigate('/home');
 		} catch (error) {
 			console.error(error);
 		}

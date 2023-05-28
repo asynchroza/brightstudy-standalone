@@ -28,9 +28,13 @@ const login = async (parent: any, { email, password }: { email: string; password
 
 	await saveUserToken(user.id, token);
 
-	const cookieName = 'x-bs-jwt';
+	const jwtTokenCookie = 'x-bs-jwt';
+	const permissionsCookie = 'x-user-perms';
 
-	context.res.set('Set-Cookie', `${cookieName}=${token}; Path=/; Expires=${expiresIn}; HttpOnly; Secure`);
+	context.res.set('Set-Cookie', [
+		`${jwtTokenCookie}=${token}; Path=/; Expires=${expiresIn}; HttpOnly; Secure`,
+		`${permissionsCookie}=${payload.brightstudy.permissions}; Path=/`
+	]);
 
 	return 'success';
 };

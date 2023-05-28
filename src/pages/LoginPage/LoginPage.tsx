@@ -10,10 +10,10 @@ const StyledContainer = styled.div`
 	background-color: silver;
 `;
 
-const LoginPage = ({ initialLogin = false }: { initialLogin?: boolean }) => {
+const LoginPage = () => {
 	return (
 		<StyledContainer>
-			<LoginForm initialLogin={initialLogin} />
+			<LoginForm />
 		</StyledContainer>
 	);
 };
