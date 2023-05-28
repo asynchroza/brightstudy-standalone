@@ -79,10 +79,10 @@ const LoginForm = ({ initialLogin = false }: { initialLogin?: boolean }) => {
 				data generation always happen on the server.
 			*/
 
-			initialLogin ? navigate('/administration') : navigate('/home');
+			// initialLogin ? navigate('/administration') : navigate('/home');
 
 			// TODO: resolve issue with cookie not being set when response is handled
-			console.log(getCookie(COOKIES.jwtToken));
+			console.log(`JWT-COOKIE: ${getCookie(COOKIES.jwtToken)}`);
 		} catch (error) {
 			console.error(error);
 		}

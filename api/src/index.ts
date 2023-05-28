@@ -69,7 +69,11 @@ const server = new ApolloServer({ resolvers, typeDefs, plugins: [ApolloServerPlu
 
 	app.use(
 		'/',
-		cors<cors.CorsRequest>(),
+		cors<cors.CorsRequest>({
+			credentials: true,
+			exposedHeaders: ['Set-Cookie'],
+			origin: ['https://localhost:5173']
+		}),
 		// 50mb is the limit that `startStandaloneServer` uses, but you may configure this to suit your needs
 		bodyParser.json({ limit: '50mb' }),
 		// expressMiddleware accepts the same arguments:
